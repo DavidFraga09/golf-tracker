@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Rastreo en Tiempo Real - Carrito de Golf</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body { font-family: Arial; padding: 20px; background:#f3f3f3; }
+    input, button { width:100%; padding:12px; margin-top:10px; border-radius:6px; border:1px solid #aaa; }
+    button { background:#1E3F20; color:white; border:none; font-weight:bold; }
+    #status { margin-top:15px; padding:10px; font-size:14px; border-radius:6px; background:white; }
+  </style>
+</head>
+<body>
+
+  <h2>🚗 Rastreo de Carrito en Tiempo Real</h2>
+
+  <label>ID del Carrito:</label>
+  <input id="carrito" placeholder="Ej: CART-009">
+
+  <button id="btnToggle" onclick="toggleTracking()">INICIAR RASTREO</button>
+
+  <div id="status">⏸ Rastreo detenido</div>
+
+  <script>
+    let tracking = false;
+    let interval = null;
+
+    function toggleTracking() {
+      const carrito = document.getElementById("carrito").value.trim();
+      if (!carrito) return alert("Ingresa el ID del carrito");
+
+      tracking = !tracking;
+
+      if (tracking) {
+        document.getElementById("btnToggle").innerText = "DETENER RASTREO";
+        document.getElementById("status").innerText = "📡 Solicitando permiso de GPS...";
+        startTracking(carrito);
+      } else {
+        document.getElementById("btnToggle").innerText = "INICIAR RASTREO";
+        document.getElementById("status").innerText = "⏸ Rastreo detenido";
+        clearInterval(interval);
+      }
+    }
+
+    function startTracking(carrito) {
+      sendLocation(carrito); // Envía una vez
+
+      interval = setInterval(() => {
+        sendLocation(carrito);
+      }, 5000);
+    }
+
+    function sendLocation(carrito) {
+      if (!navigator.geolocation) {
+        document.getElementById("status").innerText = "⚠️ Este dispositivo no soporta GPS";
+        return;
+      }
+
+      console.log("📌 Intentando obtener ubicación...");
+
+      navigator.geolocation.getCurrentPosition(
+        async (pos) => {
+          document.getElementById("status").innerText = `📍 GPS OK: ${pos.coords.latitude.toFixed(6)}, ${pos.coords.longitude.toFixed(6)}`;
+
+          const data = {
+            identificador: carrito,
+            latitud: pos.coords.latitude,
+            longitud: pos.coords.longitude
+          };
+
+          try {
+            const res = await fetch("http://172.22.6.248:5000/api/ubicaciones/mobile", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(data)
+            });
+
+            console.log("✅ Ubicación enviada");
+            document.getElementById("status").innerText = `✅ Última actualización: ${new Date().toLocaleTimeString()}`;
+
+          } catch (error) {
+            console.log("❌ Error enviando:", error);
+            document.getElementById("status").innerText = "⚠️ Error al enviar ubicación";
+          }
+        },
+
+        // ⛔ Si el GPS está bloqueado o sin permiso
+        (err) => {
+          console.log("🚫 Error de GPS:", err);
+          document.getElementById("status").innerText = "❌ GPS bloqueado o sin permiso. Actívalo.";
+        },
+        { enableHighAccuracy: true }
+      );
+    }
+  </script>
+
+</body>
+</html>

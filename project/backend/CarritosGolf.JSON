@@ -1,0 +1,126 @@
+{
+  "info": {
+    "name": "Carritos Golf Backend API",
+    "_postman_id": "a111b222-c333-d444-e555-f666g777h888",
+    "description": "Colección de pruebas para el backend de Carritos de Golf (usuarios, carritos, ubicaciones)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Usuarios",
+      "item": [
+        {
+          "name": "Registrar usuario",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Usuario Prueba\",\n  \"email\": \"usuario@carritosgolf.com\",\n  \"password\": \"12345678\",\n  \"rol\": \"admin\"\n}"
+            },
+            "url": { "raw": "http://localhost:5000/api/usuarios/register", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["api", "usuarios", "register"] }
+          }
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"usuario@carritosgolf.com\",\n  \"password\": \"12345678\"\n}"
+            },
+            "url": { "raw": "http://localhost:5000/api/usuarios/login", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["api", "usuarios", "login"] }
+          }
+        },
+        {
+          "name": "Obtener perfil",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": { "raw": "http://localhost:5000/api/usuarios/profile", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["api", "usuarios", "profile"] }
+          }
+        },
+        {
+          "name": "Listar usuarios",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": { "raw": "http://localhost:5000/api/usuarios", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["api", "usuarios"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Carritos",
+      "item": [
+        {
+          "name": "Crear carrito",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"identificador\": \"CART-001\",\n  \"modelo\": \"EZ-GO RXV\",\n  \"estado\": \"activo\",\n  \"bateria\": 85\n}"
+            },
+            "url": { "raw": "http://localhost:5000/api/carritos", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["api", "carritos"] }
+          }
+        },
+        {
+          "name": "Listar carritos",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": { "raw": "http://localhost:5000/api/carritos", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["api", "carritos"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Ubicaciones",
+      "item": [
+        {
+          "name": "Registrar ubicación",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"carrito_id\": \"<ID_DEL_CARRITO>\",\n  \"latitud\": 20.6375,\n  \"longitud\": -87.0702,\n  \"nivel_bateria\": 85\n}"
+            },
+            "url": { "raw": "http://localhost:5000/api/ubicaciones", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["api", "ubicaciones"] }
+          }
+        },
+        {
+          "name": "Listar ubicaciones",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": { "raw": "http://localhost:5000/api/ubicaciones", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["api", "ubicaciones"] }
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    { "key": "token", "value": "" }
+  ]
+}
