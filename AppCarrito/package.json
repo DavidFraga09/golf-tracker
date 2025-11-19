@@ -1,0 +1,24 @@
+{
+  "name": "appcarrito",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "expo start",
+    "android": "expo run:android",
+    "ios": "expo run:ios",
+    "web": "expo start --web"
+  },
+  "dependencies": {
+    "@react-native-async-storage/async-storage": "^2.2.0",
+    "expo": "~54.0.22",
+    "expo-camera": "~17.0.9",
+    "expo-location": "~19.0.7",
+    "expo-splash-screen": "~31.0.10",
+    "expo-status-bar": "~3.0.8",
+    "expo-task-manager": "~14.0.8",
+    "react": "19.1.0",
+    "react-native": "0.81.5",
+    "socket.io-client": "^4.8.1"
+  },
+  "private": true
+}

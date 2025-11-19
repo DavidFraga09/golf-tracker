@@ -1,0 +1,24 @@
+{
+  "expo": {
+    "name": "AppCarrito",
+    "slug": "AppCarrito",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "automatic",
+    "android": {
+      "permissions": [
+        "CAMERA",
+        "ACCESS_FINE_LOCATION",
+        "ACCESS_COARSE_LOCATION"
+      ],
+      "package": "com.lalop.AppCarrito"
+    },
+    "plugins": ["expo-camera", "expo-location"],
+    "extra": {
+      "eas": {
+        "projectId": "1f8a69e8-68b4-437f-a6da-b21cc086f7c6"
+      }
+    }
+  }
+}
